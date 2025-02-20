@@ -1,8 +1,7 @@
-version: '3.8'
-
 services:
   nginx:
-    image: nginx:1.21.1
+    image: nginx:alpine  # Changed to alpine which has better ARM support
+    platform: linux/arm64
     ports:
       - "80:80"
     volumes:
@@ -13,30 +12,33 @@ services:
 
   php:
     build: ./docker/php
+    platform: linux/arm64
     volumes:
       - ./src:/var/www/
 
-  mysql:
-    image: mysql:8.0.26
+  db:
+    image: mysql:8.0
+    platform: linux/arm64
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: laravel_db
-      MYSQL_USER: laravel_user
-      MYSQL_PASSWORD: laravel_pass
+      MYSQL_DATABASE: crm_db
+      MYSQL_USER: crm_user
+      MYSQL_PASSWORD: crm_pass
     command:
       mysqld --default-authentication-plugin=mysql_native_password
     volumes:
       - ./docker/mysql/data:/var/lib/mysql
       - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    environment:
-      - PMA_ARBITRARY=1
-      - PMA_HOST=mysql
-      - PMA_USER=laravel_user
-      - PMA_PASSWORD=laravel_pass
-    depends_on:
-      - mysql
-    ports:
-      - 8080:80
+  # phpmyadmin:
+  #   image: phpmyadmin:latest
+  #   platform: linux/amd64  # PhpMyAdmin doesn't have an official ARM image, using emulation
+  #   environment:
+  #     - PMA_ARBITRARY=1
+  #     - PMA_HOST=mysql
+  #     - PMA_USER=laravel_user
+  #     - PMA_PASSWORD=laravel_pass
+  #   depends_on:
+  #     - mysql
+  #   ports:
+  #     - 8080:80

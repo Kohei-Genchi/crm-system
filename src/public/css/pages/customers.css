@@ -1,0 +1,40 @@
+/* Add these to public/css/pages/customers.css */
+
+/* Form specific styles */
+.customer-form .form-section {
+    background: #f9fafb;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid #e5e7eb;
+}
+
+.customer-form .form-group:last-child {
+    margin-bottom: 0;
+}
+
+/* Optional: Add a subtle transition effect on form controls */
+.customer-form .form-control {
+    transition: all 0.2s ease-in-out;
+}
+
+.customer-form .form-control:hover {
+    border-color: #9ca3af;
+}
+
+/* Additional styling for form sections */
+.form-section + .form-section {
+    margin-top: 1.5rem;
+}
+
+/* Style placeholders */
+.customer-form .form-control::placeholder {
+    color: #9ca3af;
+    opacity: 1;
+}
+
+/* Additional responsive adjustments */
+@media (min-width: 768px) {
+    .customer-form .form-section {
+        padding: 2rem;
+    }
+}
